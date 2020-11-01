@@ -1,32 +1,67 @@
 <template>
    <div id="app">
-   <v-app>
    
-   <!-- <header> -->
-      <!--menu-->
-      <v-app-bar-nav-icon @click=" drawer= true">
-          <v-toolbar-title></v-toolbar-title>
+   <v-app>
 
-        <v-navigation-drawer v-model="drawer" fixed temorary>
-          <v-list nav dense>
-            <v-list-item-group>
+     <v-card>
+
+      <header>
+      
+      <v-app-bar color="deep-purple" dark>
+      
+        <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+        
+        <v-toolbar-title>Dr.AssetPlanner</v-toolbar-title>
+
+        <v-spacer></v-spacer>
+
+        <!-- 前回閲覧した物件をみる -->
+        <v-btn icon>
+          <v-icon>mdi-eye</v-icon>
+        </v-btn>
+
+        <!-- お気に入りの物件をみる -->
+        <v-btn icon>
+          <v-icon>mdi-heart</v-icon>
+        </v-btn>
+      
+      </v-app-bar>
+
+      <!-- ここから -->
+      <v-navigation-drawer
+        v-model="drawer"
+        fixed
+        temporary
+        width="200"
+      >
+        <v-list
+          nav
+          dense
+        >
+          <v-list-item-group>
+           
+
 
               <v-list-item
-                v-for = "(menuItem,index) in menuItems" :key ="index" >
-
-                <v-list-item-title>{{menuItem.name}}</v-list-item-title>
-
-
-              </v-list-item>
-
-            </v-list-item-group>
-          </v-list>
-
-        </v-navigation-drawer>
-        
-      </v-app-bar-nav-icon>
+                v-for="(menuItem, index) in menuItems"
+                :key="index"
+                >
+                <v-list-item-title v-on:click="menuItem.href"><a v-bind:href="menuItem.href">{{ menuItem.name }}</a></v-list-item-title>
+            </v-list-item>
+           
+            
+          </v-list-item-group>
+        </v-list>
+      </v-navigation-drawer>
       
-    <!-- </header>   -->
+    
+    </header>  
+
+   </v-card> 
+    
+
+
+
       
       <!---->
       <v-main>
@@ -34,10 +69,7 @@
           <v-container>
             <v-card  class="mx-auto" max-width="500" >
              
-               
-              <!-- <v-img
-              src="./assets/main.png"
-              > -->
+             
                <carousel v-bind:autoplay="true" v-bind:loop="true" 
               v-bind:per-page=1 v-bind:speed=2000 v-bind:pagination-enabled="false">
 
@@ -57,39 +89,19 @@
 
              
               
-              <v-app-bar id="logo" flat class="transparent">
+              <!-- <v-app-bar id="logo" flat class="transparent"> -->
                 
                 <!-- class="font-weight-bold text-center white--text pl-0 -->
                 
-                <v-toolbar-title class="logo-title">
+                <!-- <v-toolbar-title class="logo-title">
                   Dr. Asset Planner
                 </v-toolbar-title>
 
-              </v-app-bar>
+              </v-app-bar> -->
               
               <!-- </v-img> -->
 
 
-
-              <!-- 追加 -->
-              <!-- <carousel v-bind:autoplay="true" v-bind:loop="true" 
-              v-bind:per-page=1 v-bind:speed=2000 v-bind:pagination-enabled="false">
-
-                 <slide >
-                  <img src = "./assets/main.png">
-                 </slide>
-              
-                 <slide >
-                   <img src = "./assets/1023.png">
-                 </slide>
-    
-                <slide>
-                    <img src = "./assets/main.png">
-                </slide>
-
-              </carousel> -->
-
-             
 
 
               <v-card   flat width="200" class="ma-2" >
@@ -298,6 +310,7 @@
         </v-content>
 
         <!-- ふっだーリスト名: links -->
+        
         <v-card height="150" color="grey lighten-4">
           <v-footer padless absolute>
             <v-row justify="center" no-gutters>
@@ -324,22 +337,39 @@ import { Carousel, Slide } from 'vue-carousel'; //追加
 export default {
   name: 'App',
 
-  //
+  //スライダー
     Carousel,
     Slide,
 
 
-  //    components: {
-  //   'carousel': Carousel,
-  //   'slide': Slide
-  // },
-  
+
  
 data : function(){
   return{
 
     // menu
       drawer:false,
+      
+      
+      menuItems : [
+      {
+      name : 'Dr.asset',
+      href: 'https://python5.com/q/pkgyxcsl' ,
+      },
+      {
+      name : '2',
+       href: 'https://python5.com/q/pkgyxcsl' ,
+      },
+      {
+      name : 'D3',
+      href: 'https://python5.com/q/pkgyxcsl' ,
+      },
+      {
+      name : 'Dr.asset4',
+      href: 'https://python5.com/q/pkgyxcsl' ,
+      },
+    ],
+      
 
     // 家賃
       inputRent : " ", // watch :{ inputRent→同じ名前
@@ -370,24 +400,7 @@ data : function(){
 
 
 
-    menuItem : [
-      {
-      name : 'Dr.asset',
-      url : ''
-      },
-      {
-      name : 'Dr.asset',
-       url : ''
-      },
-      {
-      name : 'Dr.asset',
-       url : ''
-      },
-      {
-      name : 'Dr.asset',
-       url : ''
-      },
-    ],
+    
 
 // ぱんくず
     items: [
@@ -551,7 +564,12 @@ watch:{
   font-family:  "sans-serif" !important; */
 
 }
-  
+
+
+ /* ハンバーガーメニューの幅 ● オーバーライドしないと適用されないよ*/
+ .v-navigation-drawer--close.v-navigation-drawer--temporary {
+    transform: translateX(-13vw) !important;
+}
 
 
 /* 追加 */
